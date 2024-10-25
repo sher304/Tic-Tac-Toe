@@ -56,17 +56,23 @@ public class Game {
     }
 
     public void boardMovement(JButton button) {
-        //i need to take name from clicked button, for example 0:1, and i need to take 0 - row, 1 - column.
-        // and store them into arr. X for x, O for o
-
         int getRow = Integer.parseInt(button.getName().substring(0, 1));
         int getColumn = Integer.parseInt(button.getName().substring(2)) ;;
         System.out.println("Text: " + button.getText());
         if (button.getText().equals("X")) board[getRow][getColumn] = -1;
         else board[getRow][getColumn ] = -2;
+    }
 
+    public void boardDisplay() {
         for (int i = 0; i < board.length; i++) {
             System.out.println(Arrays.toString(board[i]));
         }
     }
+
+    // After implementing the logic of passing the values.
+    // I need to check the possible winning combinations
+    // For example if i pasted in a row, i need to check if there are row consists of 5 elements, and doesn't been passed other value
+    // And i need to check by horizontally, vertically
+    // After all them, i need to check them by cross
+    // I can stop the checking if there is passed other value
 }
