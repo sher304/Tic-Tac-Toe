@@ -62,7 +62,7 @@ public class Game {
     }
 
     public void winValidator(int button) {
-        if (checkHorizontally(button) || checkVertically(button) || checkDiagonal(button)) {
+        if (checkHorizontally(button) || checkVertically(button) || checkDiagonalLeftTopRightBottom(button) || checkDiagonalLeftBottomRightTop(button)) {
             JLabel winInformLabel = new JLabel();
             winInformLabel.setForeground(Color.RED);
             switch (button) {
@@ -104,7 +104,7 @@ public class Game {
         return false;
     }
 
-    public boolean checkDiagonal(int symbolValue) {
+    public boolean checkDiagonalLeftTopRightBottom(int symbolValue) {
         for(int i = 0; i <= 0; i++)  {
             int valueCounter = 0;
             for(int j = 0; j <= 0; j++) {
@@ -116,5 +116,17 @@ public class Game {
             }
         }
         return  false;
+    }
+
+    public boolean checkDiagonalLeftBottomRightTop(int symbolValue) {
+        for (int i = 0; i <= 4; i++) {
+            int valueCounter = 0;
+            for(int j = 0; j <= 4; j++) {
+                if((i == board.length-j-1) && board[i][j] == symbolValue) valueCounter++;
+                else valueCounter = 0;
+                if(valueCounter == 5) return true;
+            }
+        }
+        return false;
     }
 }
