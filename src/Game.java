@@ -10,23 +10,31 @@ public class Game {
 
     JFrame frame;
     boolean gameOver = false;
+    JLabel winLabel;
 
     public void createUI() {
         frame = new JFrame("Tic Tac Toe");
-        frame.setLayout(new GridLayout(5, 5, 10, 10));
-        frame.setPreferredSize(new Dimension(700, 700));
+        frame.setLayout(new BorderLayout());
+        frame.setPreferredSize(new Dimension(700, 750));
+
+        winLabel = new JLabel("Tic Tac Toe", SwingConstants.CENTER);
+        winLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        winLabel.setForeground(Color.BLUE);
+        frame.add(winLabel, BorderLayout.NORTH);
+
+        JPanel boardPanel = new JPanel(new GridLayout(5, 5, 10, 10));
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = j;
                 JButton button = new JButton();
-                button.setName(i+":"+j);
-                button.setText(button.getName());
-                button.addActionListener(e -> {
-                    gameLogic(button);
-                });
-                frame.add(button);
+                button.setName(i + ":" + j);
+//                button.setText(button.getName());
+                button.addActionListener(e -> gameLogic(button));
+                boardPanel.add(button);
             }
         }
+        frame.add(boardPanel, BorderLayout.CENTER);
+
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -61,20 +69,12 @@ public class Game {
         }
     }
 
-    public void winValidator(int button) {
-        if (checkHorizontally(button) || checkVertically(button) || checkDiagonalLeftTopRightBottom(button) || checkDiagonalLeftBottomRightTop(button)) {
-            JLabel winInformLabel = new JLabel();
-            winInformLabel.setForeground(Color.RED);
-            switch (button) {
-                case -1:
-                    winInformLabel.setText("X");
-                    System.out.println("X");
-                    break;
-                case -2:
-                    winInformLabel.setText("O");
-                    System.out.println("O");
-                    break;
-            }
+    public void winValidator(int symbolValue) {
+        if (checkHorizontally(symbolValue) || checkVertically(symbolValue)
+                || checkDiagonalLeftTopRightBottom(symbolValue) || checkDiagonalLeftBottomRightTop(symbolValue)) {
+            String winner = (symbolValue == -1) ? "Player X" : "Player O";
+            winLabel.setText("Winner: " + winner);
+            winLabel.setForeground(Color.RED);
             gameOver = true;
         }
     }
@@ -85,8 +85,7 @@ public class Game {
             for(int j = 0; j < 5; j++) {
                 if(board[i][j] == symbolValue) valueCounter++;
                 else valueCounter = 0;
-
-                if(valueCounter == 5)   return true;
+                if(valueCounter == 4)   return true;
             }
         }
         return false;
@@ -98,7 +97,7 @@ public class Game {
             for (int j = 0; j < 5; j++) {
                 if(board[j][i] == symbolValue) valueCounter++;
                 else valueCounter = 0;
-                if(valueCounter == 5) return true;
+                if(valueCounter == 4) return true;
             }
         }
         return false;
@@ -112,7 +111,7 @@ public class Game {
                     if(board[i+k][j+k] == symbolValue) valueCounter++;
                     else valueCounter = 0;
                 }
-                if(valueCounter == 5) return true;
+                if(valueCounter == 4) return true;
             }
         }
         return  false;
@@ -126,7 +125,7 @@ public class Game {
                     if(board[i+k][j-k] == symbolValue) valueCounter++;
                     else valueCounter = 0;
                 }
-                if (valueCounter == 5) return true;
+                if (valueCounter == 4) return true;
             }
         }
         return false;
