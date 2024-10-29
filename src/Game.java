@@ -1,30 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Dimension2D;
 import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Map;
 
 
 public class Game {
 
     int[][] board = new int[5][5];
     boolean firstPlayer = true;
-    Dictionary<String, int[]> xCoordinates = new Hashtable<>();
-    Dictionary<String, int[]> oCoordinates = new Hashtable<>();
+
+    int xSteps = 0;
+    int oSteps = 0;
+
+    int gameCounter = 1;
 
     public void createUI() {
         JFrame frame = new JFrame("Tic Tac Toe");
         frame.setLayout(new GridLayout(5, 5, 10, 10));
         frame.setPreferredSize(new Dimension(700, 700));
-        int buttonId = 1;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                board[i][j] = buttonId;
+                board[i][j] = j;
                 JButton button = new JButton();
                 button.setName(i+":"+j);
-                buttonId++;
                 button.setText(button.getName());
                 button.addActionListener(e -> {
                     gameLogic(button);
@@ -39,7 +36,6 @@ public class Game {
     }
 
     public void gameLogic(JButton clickedButton) {
-//        if (clickedButton.getText().equals("")) return;
         if (firstPlayer)  {
             firstPlayer = false;
             clickedButton.setText("X");
@@ -48,19 +44,15 @@ public class Game {
             clickedButton.setText("O");
             firstPlayer = true;
         }
-        movementLogic(clickedButton);
-    }
-
-    public void movementLogic(JButton clickedButton) {
         boardMovement(clickedButton);
     }
 
     public void boardMovement(JButton button) {
         int getRow = Integer.parseInt(button.getName().substring(0, 1));
         int getColumn = Integer.parseInt(button.getName().substring(2)) ;;
-        System.out.println("Text: " + button.getText());
         if (button.getText().equals("X")) board[getRow][getColumn] = -1;
         else board[getRow][getColumn ] = -2;
+        winValidator(board[getRow][getColumn]);
     }
 
     public void boardDisplay() {
@@ -69,10 +61,47 @@ public class Game {
         }
     }
 
-    // After implementing the logic of passing the values.
-    // I need to check the possible winning combinations
-    // For example if i pasted in a row, i need to check if there are row consists of 5 elements, and doesn't been passed other value
-    // And i need to check by horizontally, vertically
-    // After all them, i need to check them by cross
-    // I can stop the checking if there is passed other value
+    public void winValidator(int button) {
+        checkHorizontally(button);
+        checkVertically(button);
+    }
+
+    public boolean checkHorizontally(int symbolValue) {
+        for (int i = 0; i < 5; i++) {
+            int valueCounter = 0;
+            for(int j = 0; j < 5; j++) {
+                if(board[i][j] == symbolValue) valueCounter++;
+                else valueCounter = 0;
+
+                if(valueCounter == 5) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkVertically(int button) {
+        for (int i = 0; i < 5; i++) {
+            int valueCounter = 0;
+            for (int j = 0; j < 5; j++) {
+                if(board[j][i] == button) valueCounter++;
+                else valueCounter = 0;
+                if(valueCounter == 5) return true;
+            }
+        }
+    return false;
+    };
+
+    public boolean checkDiagonal(int button) {
+        for(int i = 0; i <= 5 -5; i++)  {
+            int valueCounter = 0;
+            for(int j = 0; j <=5 -5; j++) {
+                for(int k = 0; k < 5; k++) {
+                    if(board[i+k][j+k] == button) valueCounter++;
+                    else valueCounter = 0;
+                }
+                if(valueCounter == 5) return true;
+            }
+        }
+        return  false;
+    };
 }
