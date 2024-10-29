@@ -119,12 +119,14 @@ public class Game {
     }
 
     public boolean checkDiagonalLeftBottomRightTop(int symbolValue) {
-        for (int i = 0; i <= 4; i++) {
+        for(int i = 0; i <= 0; i++)  {
             int valueCounter = 0;
-            for(int j = 0; j <= 4; j++) {
-                if((i == board.length-j-1) && board[i][j] == symbolValue) valueCounter++;
-                else valueCounter = 0;
-                if(valueCounter == 5) return true;
+            for(int j = 4; j >= 4; j--) {
+                for(int k = 0; k <= 4; k++) {
+                    if(board[i+k][j-k] == symbolValue) valueCounter++;
+                    else valueCounter = 0;
+                }
+                if (valueCounter == 5) return true;
             }
         }
         return false;
