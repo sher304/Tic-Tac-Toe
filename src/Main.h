@@ -31,6 +31,14 @@ JNIEXPORT void JNICALL Java_Main_makeMovement
 JNIEXPORT jboolean JNICALL Java_Main_gameOver
   (JNIEnv *, jobject);
 
+/*
+ * Class:     Main
+ * Method:    getNextPlayer
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_Main_getNextPlayer
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

@@ -64,7 +64,6 @@ public class Main {
 
         int row = Integer.parseInt(button.getName().substring(0, 1));
         int col = Integer.parseInt(button.getName().substring(2));
-
         int currentPlayer = getNextPlayer();
         makeMovement(row, col, currentPlayer);
 
