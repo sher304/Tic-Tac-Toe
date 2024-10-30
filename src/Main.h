@@ -39,6 +39,30 @@ JNIEXPORT jboolean JNICALL Java_Main_gameOver
 JNIEXPORT jint JNICALL Java_Main_getNextPlayer
   (JNIEnv *, jobject);
 
+/*
+ * Class:     Main
+ * Method:    getDimension
+ * Signature: (Ljava/lang/String;Z)I
+ */
+JNIEXPORT jint JNICALL Java_Main_getDimension
+  (JNIEnv *, jobject, jstring, jboolean);
+
+/*
+ * Class:     Main
+ * Method:    getPlayerValue
+ * Signature: (I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_Main_getPlayerValue
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     Main
+ * Method:    getWinningCells
+ * Signature: ()[[I
+ */
+JNIEXPORT jobjectArray JNICALL Java_Main_getWinningCells
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

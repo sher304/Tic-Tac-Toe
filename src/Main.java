@@ -13,6 +13,8 @@ public class Main {
     private native void makeMovement(int row, int col, int player);
     private native boolean gameOver();
     private native int getNextPlayer();
+    private native int getDimension(String name, boolean isRow);
+    private native String getPlayerValue(int playerValue);
 
     public void createUI() {
         JFrame frame = new JFrame("Tic Tac Toe");
@@ -28,13 +30,13 @@ public class Main {
 
         int[][] boardState = getBoard();
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < boardState.length; i++) {
+            for (int j = 0; j < boardState[i].length; j++) {
                 JButton button = new JButton();
                 button.setFont(new Font("Arial", Font.PLAIN, 24));
                 button.setName(i + ":" + j);
 
-                String text = boardState[i][j] == 1 ? "X" : (boardState[i][j] == 2 ? "O" : "");
+                String text = getPlayerValue(boardState[i][j]);
                 button.setText(text);
 
                 button.addActionListener(new ActionListener() {
@@ -55,17 +57,13 @@ public class Main {
         frame.setVisible(true);
     }
 
-
     private void handleButtonClick(JButton button, JLabel winLabel, JFrame frame) {
-        if (gameOver()) {
-            winLabel.setText("Game Over");
-            return;
-        }
+        if (gameOver()) return;
 
-        int row = Integer.parseInt(button.getName().substring(0, 1));
-        int col = Integer.parseInt(button.getName().substring(2));
+        int row = getDimension(button.getName(), true);
+        int column = getDimension(button.getName(), false);
         int currentPlayer = getNextPlayer();
-        makeMovement(row, col, currentPlayer);
+        makeMovement(row, column, currentPlayer);
 
         updateUI(frame);
 
@@ -78,10 +76,10 @@ public class Main {
         int[][] boardState = getBoard();
         Component[] components = ((JPanel) frame.getContentPane().getComponent(1)).getComponents();
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < boardState.length; i++) {
+            for (int j = 0; j < boardState[i].length; j++) {
                 JButton button = (JButton) components[i * 5 + j];
-                String text = boardState[i][j] == 1 ? "X" : (boardState[i][j] == 2 ? "O" : "");
+                String text = getPlayerValue(boardState[i][j]);
                 button.setText(text);
             }
         }
