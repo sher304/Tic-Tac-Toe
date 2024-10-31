@@ -57,11 +57,51 @@ JNIEXPORT jstring JNICALL Java_Main_getPlayerValue
 
 /*
  * Class:     Main
- * Method:    getWinningCells
- * Signature: ()[[I
+ * Method:    setBoardSize
+ * Signature: (I)V
  */
-JNIEXPORT jobjectArray JNICALL Java_Main_getWinningCells
+JNIEXPORT void JNICALL Java_Main_setBoardSize
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     Main
+ * Method:    gameKeyReader
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_Main_gameKeyReader
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     Main
+ * Method:    placeMark
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_Main_placeMark
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     Main
+ * Method:    getCursorRow
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_Main_getCursorRow
   (JNIEnv *, jobject);
+
+/*
+ * Class:     Main
+ * Method:    getCursorColumn
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_Main_getCursorColumn
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     Main
+ * Method:    moveCursor
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_Main_moveCursor
+  (JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus
 }
